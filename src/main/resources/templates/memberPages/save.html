@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/member/save" enctype="multipart/form-data" method="post">
+    아이디 : <input class="ui-icon-clipboard" type="text" name="memberEmail"> <br>
+    비밀번호 : <input type="text" name="memberPassword"> <br>
+    이름 : <input type="text" name="memberName"> <br>
+    핸드폰 : <input type="text" name="memberPhone"> <br>
+    사진 : <input type="file" name="memberProfile"> <br>
+    <input type="submit" value="가입하기">
+</form>
+</body>
+</html>
