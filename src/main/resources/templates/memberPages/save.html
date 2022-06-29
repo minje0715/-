@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <form action="/member/save" enctype="multipart/form-data" method="post">
-    아이디 : <input class="ui-icon-clipboard" type="text" name="memberEmail"> <br>
+    아이디 : <input type="text" id="email" name="memberEmail" onblur="duplicateCheck()"> <br>
+    <p id="idCheck"></p>
     비밀번호 : <input type="text" name="memberPassword"> <br>
     이름 : <input type="text" name="memberName"> <br>
     핸드폰 : <input type="text" name="memberPhone"> <br>
@@ -14,4 +16,30 @@
     <input type="submit" value="가입하기">
 </form>
 </body>
+<script th:inline="javascript">
+    const duplicateCheck = () => {
+        const email = document.getElementById("email").value;
+        const idCheck = document.getElementById("idCheck");
+        $.ajax({
+            type: "post",
+            url: "/member/duplicateCheck",
+            data: {"email": email},
+            dataType: "text",
+            success: function (result) {
+                if (result == "ok") {
+                    idCheck.innerHTML = "사용가능아이디";
+                    idCheck.style.color = "green";
+                } else {
+                    idCheck.innerHTML = "사용중인아이디";
+                    idCheck.style.color = "red";
+                }
+                alert("중복체크중입니다");
+            },
+            error: function () {
+                alert("ajax 에러");
+            }
+
+        })
+    }
+</script>
 </html>

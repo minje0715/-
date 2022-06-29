@@ -1,12 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<a href="/member/save-form">회원가입</a>
-<a href="/member/login-form">로그인</a>
+<div th:if="${session.loginEmail}">
+    <div th:if="${session.loginEmail.toString().equals('admin')}">
+        <a href="#">관리자모드</a>
+    </div>
+    <div>
+        <a href="/member/logout">로그아웃</a>
+    </div>
+    <div>
+        <a th:href="@{|/member/detail/${session.loginId}|}">마이페이지</a>
+    </div>
+    <div>
+        <a href="/board/save">글작성</a>
+    </div>
+</div>
+
+
+<div th:unless="${session.loginEmail}">
+    <div>
+        <a href="/member/login-form">로그인</a>
+    </div>
+    <div>
+        <a href="/member/save-form">회원가입</a>
+    </div>
+</div>
+</div>
 <a href="/board/findAll">글 목록</a>
 </body>
 </html>

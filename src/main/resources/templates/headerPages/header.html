@@ -12,7 +12,6 @@
         }
     </style>
     <div id="header">
-        헤더 부분입니다.
         <!--로그인 0
         1. 관리자(admin)라면 관리자모드 링크보임.
         2. 관리자가 아니라면 로그아웃 링크 보임.
@@ -26,6 +25,9 @@
             </div>
             <div>
                 <a href="#">로그아웃</a>
+            </div>
+            <div>
+                <a href="/member/detail">마이페이지</a>
             </div>
         </div>
         <div th:unless="${session.loginEmail}">

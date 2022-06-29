@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/member/update" method="post" enctype="multipart/form-data">
+<input type="hidden" name="id" th:value="${member.id}">
+<input type="text" name="memberEmail" th:value="${member.memberEmail}" readonly>
+<input type="text" name="memberPassword" th:value="${member.memberPassword}" readonly>
+<input type="text" name="memberName" th:value="${member.memberName}" readonly>
+<input type="text" name="memberPhone" placeholder="전화번호수정하기">
+<input type="hidden" name="memberProfile" th:value="${member.memberFileName}" readonly>
+    <input type="submit" value="수정하기">
+</form>
+</body>
+</html>
