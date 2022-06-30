@@ -16,11 +16,9 @@
         <a th:href="@{|/member/detail/${session.loginId}|}">마이페이지</a>
     </div>
     <div>
-        <a href="/board/save">글작성</a>
+        <a href="/board/save-form">글작성</a>
     </div>
 </div>
-
-
 <div th:unless="${session.loginEmail}">
     <div>
         <a href="/member/login-form">로그인</a>

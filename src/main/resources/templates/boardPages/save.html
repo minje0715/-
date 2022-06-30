@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
+<form action="/board/save" enctype="multipart/form-data" method="post">
+작성자 : <input type="text" name="boardWriter" th:value="${session.loginEmail}" readonly> <br>
+제목 : <input type="text" name="boardTitle"> <br>
+내용 : <input type="text" name="boardContents"> <br>
+사진 : <input type="file" name="boardFile"> <br>
+    <input type="submit" value="글 작성">
+</form>
 </body>
 </html>

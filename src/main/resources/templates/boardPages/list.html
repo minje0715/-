@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+<div class="container">
+    <h2>게시글 목록</h2>
+    <table class="table">
+        <tr>
+            <td>글 번호</td>
+            <td>작성자</td>
+            <td>제목</td>
+            <td>내용</td>
+            <td>조회수</td>
+            <td>작성시간</td>
+            <td>사진</td>
+        </tr>
+        <tr>
+        <tr th:each="board: ${boardList}">
+            <td th:text="${board.bid}"></td>
+            <td th:text="${board.boardWriter}"></td>
+            <td th:text="${board.boardTitle}"></td>
+            <td th:text="${board.boardContents}"></td>
+            <td th:text="${board.boardHits}"></td>
+            <td th:text="*{#temporals.format(board.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td><img th:src="@{|/upload/${board.boardFileName}|}" width="100" height="100" alt=""></td>
+            <td>
+                <a th:href="@{|/board/findById/${board.bid}|}">조회</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

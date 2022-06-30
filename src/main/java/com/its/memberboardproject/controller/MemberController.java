@@ -47,14 +47,12 @@ public class MemberController {
     @PostMapping("/duplicateCheck") // 아이디 중복체크
     public @ResponseBody String  duplicateCheck(@RequestParam("email") String memberEmail) {
        String result = memberService.duplicateCheck(memberEmail);
-        System.out.println("result = " + result);
        return result;
     }
 
     @GetMapping("/detail/{id}")
     public String findById(@PathVariable Long id, Model model) {
     MemberDTO memberDTO = memberService.findById(id);
-        System.out.println("memberDTO = " + memberDTO);
     model.addAttribute("member", memberDTO);
     return "memberPages/myPage";
     }
@@ -74,15 +72,16 @@ public class MemberController {
 
     @PostMapping("/update")
     public String update(@ModelAttribute MemberDTO memberDTO){
-        System.out.println("memberDTO = " + memberDTO);
+        System.out.println("memberDTO cc = " + memberDTO);
      memberService.update(memberDTO);
-     return "redirect:/detail";
+     return "redirect:/member/detail/" + memberDTO.getId();
     }
 
-    @DeleteMapping("/deleteById/{id}")
-    public String deleteById(@PathVariable Long id) {
+    @GetMapping("/deleteById/{id}")
+    public String deleteById(@PathVariable Long id, HttpSession session) {
         memberService.deleteById(id);
-        return "redirect:/";
+        session.invalidate();
+        return "index";
     }
 
 }

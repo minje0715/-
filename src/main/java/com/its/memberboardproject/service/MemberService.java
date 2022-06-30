@@ -68,7 +68,7 @@ public class MemberService {
 
     public void update(MemberDTO memberDTO) {
         memberRepository.save(MemberEntity.toUpdateEntity(memberDTO));
-        System.out.println("memberDTO = " + memberDTO);
+        System.out.println("memberDTO ss = " + memberDTO);
     }
 
     public void deleteById(Long id) {

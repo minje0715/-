@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>update</title>
 </head>
 <body>
 <form action="/member/update" method="post" enctype="multipart/form-data">
@@ -11,7 +11,7 @@
 <input type="text" name="memberPassword" th:value="${member.memberPassword}" readonly>
 <input type="text" name="memberName" th:value="${member.memberName}" readonly>
 <input type="text" name="memberPhone" placeholder="전화번호수정하기">
-<input type="hidden" name="memberProfile" th:value="${member.memberFileName}" readonly>
+<input type="hidden" name="memberFileName" th:value="${member.memberFileName}" readonly>
     <input type="submit" value="수정하기">
 </form>
 </body>
