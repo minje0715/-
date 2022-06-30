@@ -66,4 +66,12 @@ public class BoardService {
             return null;
         }
     }
+
+    public void update(BoardDTO boardDTO) {
+       boardRepository.save(BoardEntity.toUpdateEntity(boardDTO));
+    }
+
+    public void deleteById(Long bid) {
+        boardRepository.deleteById(bid);
+    }
 }

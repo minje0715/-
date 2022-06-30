@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+<h2>글 작성</h2>
 <form action="/board/save" enctype="multipart/form-data" method="post">
 작성자 : <input type="text" name="boardWriter" th:value="${session.loginEmail}" readonly> <br>
 제목 : <input type="text" name="boardTitle"> <br>

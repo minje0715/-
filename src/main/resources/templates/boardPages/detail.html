@@ -8,6 +8,7 @@
 </head>
 <body>
 <div class="container">
+    <h2>글 상세조회</h2>
     <table class="table">
         <tr>
             <td>글번호</td>
@@ -17,6 +18,15 @@
             <td>조회수</td>
             <td>작성시간</td>
             <td>사진</td>
+            <div th:if="${session.loginEmail}">
+                <div th:if="${session.loginEmail.toString()} == ${board.boardWriter}">
+                    <td>수정</td>
+                    <td>삭제</td>
+                </div>
+                <div th:if="${session.loginEmail.toString().equals('admin')}">
+                    <td>삭제</td>
+                </div>
+            </div>
         </tr>
         <tr>
             <td th:text="${board.bid}"></td>
@@ -25,9 +35,37 @@
             <td th:text="${board.boardContents}"></td>
             <td th:text="${board.boardHits}"></td>
             <td th:text="*{#temporals.format(board.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-            <td><img th:src="@{|/upload/${board.boardFileName}|}" width="100" height="100" alt=""></td>
+            <td><img th:src="@{|/upload/${board.boardFileName}|}" width="150" height="150" alt=""></td>
+            <div th:if="${session.loginEmail}">
+                <div th:if="${session.loginEmail.toString()} == ${board.boardWriter}">
+                    <td>
+                        <button th:onclick="updateById()">수정하기</button>
+                    </td>
+                    <td>
+                        <button th:onclick="deleteById()">삭제하기</button>
+                    </td>
+                </div>
+                <div th:if="${session.loginEmail.toString().equals('admin')}">
+                    <td>
+                        <button th:onclick="deleteById()">삭제하기</button>
+                    </td>
+                </div>
+            </div>
+            <div th:unless="${session.loginEmail}">
+            </div>
+
         </tr>
     </table>
 </div>
 </body>
+<script th:inline="javascript">
+    const updateById = () => {
+        location.href = "/board/update-form/" + [[${board.bid}]];
+    }
+
+    const deleteById = () => {
+        location.href = "/board/deleteById" + [[${board.bid}]];
+    }
+
+</script>
 </html>

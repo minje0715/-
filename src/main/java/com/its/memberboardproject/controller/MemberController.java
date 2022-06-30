@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/member")
@@ -82,6 +83,20 @@ public class MemberController {
         memberService.deleteById(id);
         session.invalidate();
         return "index";
+    }
+
+    @GetMapping("/admin")
+    public String admin() {
+        return "memberPages/admin";
+    }
+
+    @GetMapping("/memberFindAll")
+    public String findAll(Model model) {
+        List<MemberDTO> memberDTOList = memberService.findAll();
+        model.addAttribute("memberList", memberDTOList);
+
+        System.out.println("memberDTOList = " + memberDTOList);
+        return "memberPages/findAll";
     }
 
 }

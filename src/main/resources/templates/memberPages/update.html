@@ -5,6 +5,7 @@
     <title>update</title>
 </head>
 <body>
+<h2>회원정보수정</h2>
 <form action="/member/update" method="post" enctype="multipart/form-data">
 <input type="hidden" name="id" th:value="${member.id}">
 <input type="text" name="memberEmail" th:value="${member.memberEmail}" readonly>

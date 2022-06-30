@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class BoardController {
     }
 
     @GetMapping("/findAll")
-    public String findAll(Model model) throws IOException{
+    public String findAll(Model model, HttpSession session) throws IOException{
        List<BoardDTO> boardDTOList = boardService.findAll();
        model.addAttribute("boardList", boardDTOList);
        return "boardPages/list";
@@ -36,14 +37,26 @@ public class BoardController {
     @GetMapping("/findById/{bid}")
     public String findById(@PathVariable Long bid, Model model) {
        BoardDTO boardDTO = boardService.findById(bid);
-        System.out.println("==================================================");
-        System.out.println(boardDTO.getBoardHits());
-        System.out.println("dto"+boardDTO);
-        System.out.println("==================================================");
-
         model.addAttribute("board", boardDTO);
         return "boardPages/detail";
     }
 
+    @GetMapping("/update-form/{bid}")
+    public String updateForm(@PathVariable Long bid, Model model) {
+       BoardDTO boardDTO = boardService.findById(bid);
+       model.addAttribute("board", boardDTO);
+       return "boardPages/update";
+    }
 
+    @PostMapping("/update")
+    public String update(@ModelAttribute BoardDTO boardDTO) {
+      boardService.update(boardDTO);
+        return "redirect:/board/findById/" +boardDTO.getBid();
+    }
+
+    @PostMapping("/deleteById/{bid}")
+    public String deleteById(@PathVariable Long bid) {
+        boardService.deleteById(bid);
+        return "redirect:/findAll";
+    }
 }

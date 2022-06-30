@@ -14,22 +14,22 @@ import java.util.List;
 public class MemberEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
+    @Column
     private Long id;
 
-    @Column(name = "member_email", unique = true)
+    @Column(unique = true)
     private String memberEmail;
 
-    @Column(name = "member_password")
+    @Column
     private String memberPassword;
 
-    @Column(name = "member_name")
+    @Column
     private String memberName;
 
-    @Column(name = "member_Phone")
+    @Column
     private String memberPhone;
 
-    @Column(name = "member_profile")
+    @Column
     private String memberFileName;
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.PERSIST, orphanRemoval = false, fetch = FetchType.LAZY)

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>내용 수정만 가능!!</h2>
+<form action="/board/update" method="post" enctype="multipart/form-data">
+<input type="hidden" name="bid" th:value="${board.bid}">
+작성자 : <input type="text" name="boardWriter" th:value="${session.loginEmail}" readonly> <br>
+제목 : <input type="text" name="boardTitle" th:value="${board.boardTitle}" readonly> <br>
+내용 : <input type="text" name="boardContents" placeholder="내용수정"> <br>
+<input type="hidden" name="boardFileName" th:value="${board.boardFileName}"> <br>
+<input type="submit" value="글 수정">
+</form>
+</body>
+</html>
