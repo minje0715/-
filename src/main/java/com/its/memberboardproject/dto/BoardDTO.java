@@ -36,4 +36,12 @@ public class BoardDTO {
         boardDTO.setBoardFileName(boardEntity.getBoardFileName());
         return boardDTO;
     }
+
+    public BoardDTO(Long bid, String boardTitle, String boardWriter, int boardHits, LocalDateTime createdTime) {
+        this.bid = bid;
+        this.boardTitle = boardTitle;
+        this.boardWriter = boardWriter;
+        this.boardHits = boardHits;
+        this.createdTime = createdTime;
+    }
 }

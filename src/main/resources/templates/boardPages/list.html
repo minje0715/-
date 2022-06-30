@@ -14,10 +14,8 @@
             <td>글 번호</td>
             <td>작성자</td>
             <td>제목</td>
-            <td>내용</td>
             <td>조회수</td>
             <td>작성시간</td>
-            <td>사진</td>
             <td>상세조회</td>
         </tr>
         <tr>
@@ -25,15 +23,60 @@
             <td th:text="${board.bid}"></td>
             <td th:text="${board.boardWriter}"></td>
             <td th:text="${board.boardTitle}"></td>
-            <td th:text="${board.boardContents}"></td>
             <td th:text="${board.boardHits}"></td>
             <td th:text="*{#temporals.format(board.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-            <td><img th:src="@{|/upload/${board.boardFileName}|}" width="100" height="100" alt=""></td>
             <td>
-                <a th:href="@{|/board/findById/${board.bid}|}">조회</a>
+                <a th:href="@{|/board/findById/${board.bid}|}">조회하기</a>
             </td>
         </tr>
     </table>
+</div>
+<!--
+    브라우저 주소창에 보이는 주소값: /board?page=1
+    /board
+    /board/* => /board/(page=1)
+    html에서 타임리프로 작성하는 주소값: /board(page=1)
+-->
+
+<div class="container">
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <!--첫페이지 요청 링크-->
+            <a class="page-link" th:href="@{/board(page=1)}">
+                <span>First</span>
+            </a>
+        </li>
+
+        <li th:class="${boardList.first} ? 'disabled'" class="page-item">
+            <!--boardList.first: isFirst()
+                boardList.number: getNumber()-->
+            <a class="page-link" th:href="${boardList.first} ? '#' : @{/board(page=${boardList.number})}">
+                <span><</span> <!-- < -->
+            </a>
+        </li>
+
+        <!-- startPage ~ endPage 까지 숫자를 만들어주는 역할 -->
+        <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
+            th:class="${page == boardList.number + 1} ? 'page-item active'" class="page-item">
+            <a class="page-link" th:text="${page}" th:href="@{/board(page=${page})}"></a>
+        </li>
+
+        <!-- 다음 페이지 요청
+            현재 3페이지를 보고 있다면 다음 페이지는 4페이지임.
+            getNumber() 값은 2임.
+            따라서 4페이지를 보고 싶다면 getNumber()+2를 해야 컨트롤러에 4를 요청할 수 있음. -->
+        <li th:class="${boardList.last} ? 'disabled'">
+            <a class="page-link" th:href="${boardList.last} ? '#' : @{/board(page=${boardList.number + 2})}">
+                <span>&gt;</span>
+            </a>
+        </li>
+
+        <li class="page-item">
+            <a class="page-link" th:href="@{/board(page=${boardList.totalPages})}">
+                <span>Last</span>
+            </a>
+        </li>
+    </ul>
 </div>
 </body>
 </html>
