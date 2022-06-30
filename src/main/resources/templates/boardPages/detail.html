@@ -36,7 +36,7 @@
             <td th:text="${board.boardHits}"></td>
             <td th:text="*{#temporals.format(board.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
             <td><img th:src="@{|/upload/${board.boardFileName}|}" width="150" height="150" alt=""></td>
-<!--            <div th:if="${session.loginEmail}">-->
+            <div th:if="${session.loginEmail}">
                 <div th:if="${session.loginEmail.toString()} == ${board.boardWriter}">
                     <td>
                         <button th:onclick="updateById()">수정하기</button>
@@ -51,20 +51,23 @@
                     </td>
                 </div>
             </div>
+
             <div th:unless="${session.loginEmail}">
             </div>
-
         </tr>
     </table>
 </div>
 </body>
 <script th:inline="javascript">
     const updateById = () => {
-        location.href = "/board/update-form/" + [[${board.bid}]];
+        const id = [[${board.bid}]];
+        location.href = "/board/update-form/" + id;
     }
 
     const deleteById = () => {
-        location.href = "/board/deleteById" + [[${board.bid}]];
+        const id = [[${board.bid}]];
+
+        location.href = "/board/deleteById/" + id;
     }
 
 </script>

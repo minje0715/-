@@ -32,7 +32,7 @@ public class BoardController {
         return "redirect:/board/findAll";
     }
 
-    @GetMapping("/findAll")
+    @GetMapping("/")
     public String findAll(Model model, HttpSession session) throws IOException{
        List<BoardDTO> boardDTOList = boardService.findAll();
        model.addAttribute("boardList", boardDTOList);
@@ -41,6 +41,7 @@ public class BoardController {
     @GetMapping("/findById/{bid}")
     public String findById(@PathVariable Long bid, Model model) {
        BoardDTO boardDTO = boardService.findById(bid);
+        System.out.println("boardDTO = " + boardDTO);
         model.addAttribute("board", boardDTO);
         return "boardPages/detail";
     }
@@ -58,12 +59,12 @@ public class BoardController {
         return "redirect:/board/findById/" +boardDTO.getBid();
     }
 
-    @PostMapping("/deleteById/{bid}")
+    @GetMapping("/deleteById/{bid}")
     public String deleteById(@PathVariable Long bid) {
         boardService.deleteById(bid);
-        return "redirect:/findAll";
+        return "redirect:/board/findAll";
     }
-    @GetMapping
+    @GetMapping("/findAll")
     public String paging(@PageableDefault(page = 1) Pageable pageable, Model model) {
         Page<BoardDTO> boardList = boardService.paging(pageable);
         model.addAttribute("boardList", boardList);

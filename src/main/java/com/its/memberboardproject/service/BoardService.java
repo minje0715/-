@@ -53,8 +53,6 @@ public class BoardService {
         for (BoardEntity boardEntity : boardEntityList) {
             boardDTOList.add(BoardDTO.toBoardDTO(boardEntity));
         }
-        System.out.println("**");
-        System.out.println("boardDTOList = " + boardDTOList);
         return boardDTOList;
     }
 
