@@ -2,9 +2,12 @@ package com.its.memberboardproject.service;
 
 import com.its.memberboardproject.common.PagingConst;
 import com.its.memberboardproject.dto.BoardDTO;
+import com.its.memberboardproject.dto.CommentDTO;
 import com.its.memberboardproject.entity.BoardEntity;
+import com.its.memberboardproject.entity.CommentEntity;
 import com.its.memberboardproject.entity.MemberEntity;
 import com.its.memberboardproject.repository.BoardRepository;
+import com.its.memberboardproject.repository.CommentRepository;
 import com.its.memberboardproject.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,6 +29,7 @@ import java.util.Optional;
 public class BoardService {
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
+    private final CommentRepository commentRepository;
 
     public Long save(BoardDTO boardDTO) throws IOException {
         MultipartFile boardFile = boardDTO.getBoardFile();
@@ -99,5 +103,7 @@ public class BoardService {
                 ));
         return boardList;
     }
+
+
 }
 

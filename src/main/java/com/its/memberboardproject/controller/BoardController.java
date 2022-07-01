@@ -2,7 +2,9 @@ package com.its.memberboardproject.controller;
 
 import com.its.memberboardproject.common.PagingConst;
 import com.its.memberboardproject.dto.BoardDTO;
+import com.its.memberboardproject.dto.CommentDTO;
 import com.its.memberboardproject.service.BoardService;
+import com.its.memberboardproject.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -20,6 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardController {
     private final BoardService boardService;
+    private final CommentService commentService;
 
     @GetMapping("/save-form")
     public String saveForm() {
@@ -29,11 +32,11 @@ public class BoardController {
     @PostMapping("/save")
     public String save(@ModelAttribute BoardDTO boardDTO) throws IOException {
         boardService.save(boardDTO);
-        return "redirect:/board/findAll";
+        return "redirect:/board";
     }
 
     @GetMapping("/")
-    public String findAll(Model model, HttpSession session) throws IOException{
+    public String findAll(Model model) {
        List<BoardDTO> boardDTOList = boardService.findAll();
        model.addAttribute("boardList", boardDTOList);
        return "boardPages/list";
@@ -41,8 +44,9 @@ public class BoardController {
     @GetMapping("/findById/{bid}")
     public String findById(@PathVariable Long bid, Model model) {
        BoardDTO boardDTO = boardService.findById(bid);
-        System.out.println("boardDTO = " + boardDTO);
         model.addAttribute("board", boardDTO);
+       List<CommentDTO> commentDTOList = commentService.findByBoardId(bid);
+        model.addAttribute("commentList",commentDTOList);
         return "boardPages/detail";
     }
 
@@ -64,7 +68,7 @@ public class BoardController {
         boardService.deleteById(bid);
         return "redirect:/board/findAll";
     }
-    @GetMapping("/findAll")
+    @GetMapping
     public String paging(@PageableDefault(page = 1) Pageable pageable, Model model) {
         Page<BoardDTO> boardList = boardService.paging(pageable);
         model.addAttribute("boardList", boardList);

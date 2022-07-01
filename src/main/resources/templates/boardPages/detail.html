@@ -5,6 +5,7 @@
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 </head>
 <body>
 <div class="container">
@@ -57,6 +58,28 @@
         </tr>
     </table>
 </div>
+<div class="container">
+    <div id="comment-write" class="input-group mb-3">
+        <input type="text" id="commentWriter" class="form-control" placeholder="작성자" th:value="${session.loginEmail}"
+               readonly>
+        <input type="text" id="commentContents" class="form-control" placeholder="내용">
+        <button id="comment-write-btn" class="btn btn-dark">댓글작성</button>
+    </div>
+    <div id="comment-list">
+        <table class="table">
+            <tr>
+                <th>댓글번호</th>
+                <th>작성자</th>
+                <th>내용</th>
+            </tr>
+            <tr th:each="comment: ${commentList}">
+                <td th:text="${comment.cid}"></td>
+                <td th:text="${comment.commentWriter}"></td>
+                <td th:text="${comment.commentContents}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
 </body>
 <script th:inline="javascript">
     const updateById = () => {
@@ -69,6 +92,48 @@
 
         location.href = "/board/deleteById/" + id;
     }
+
+    $("#comment-write-btn").click(function () {
+        if ('${session.loginEmail}' != '') {
+            const commentWriter = document.getElementById("commentWriter").value;
+            const commentContents = $("#commentContents").val();
+            const boardId = [[${board.bid}]]
+
+            $.ajax({
+                type: "post",
+                url: "/comment/save",
+                data: {
+                    "commentWriter": commentWriter,
+                    "commentContents": commentContents,
+                    "boardId": boardId,
+                },
+                dataType: "json",
+                success: function (res) {
+                    console.log(res);
+                    let output = "<table class='table'>";
+                    output += "<tr><th>댓글번호</th>";
+                    output += "<th>작성자</th>";
+                    output += "<th>내용</th>";
+
+                    for (let i in res) {
+                        output += "<tr>";
+                        output += "<td>" + res[i].cid + "</td>";
+                        output += "<td>" + res[i].commentWriter+ "</td>";
+                        output += "<td>" + res[i].commentContents + "</td>";
+                        output += "</tr>"
+                    }
+                    output += "</table>";
+                    document.getElementById('comment-list').innerHTML = output;
+                    document.getElementById('commentContents').value = '';
+                },
+                error: function () {
+                    alert("오류체크");
+                }
+            });
+        } else {
+            alert("로그인 후 이용해주세요")
+        }
+    })
 
 </script>
 </html>

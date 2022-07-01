@@ -1,6 +1,7 @@
 package com.its.memberboardproject.dto;
 
 import com.its.memberboardproject.entity.BoardEntity;
+import com.its.memberboardproject.entity.CommentEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,4 +45,6 @@ public class BoardDTO {
         this.boardHits = boardHits;
         this.createdTime = createdTime;
     }
+
+
 }
