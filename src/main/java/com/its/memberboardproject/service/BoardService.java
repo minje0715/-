@@ -105,5 +105,31 @@ public class BoardService {
     }
 
 
+    public Page<BoardDTO> search(Pageable pageable, String q, String p) {
+        int page = pageable.getPageNumber();
+
+        page = (page == 1) ? 0 : (page - 1);
+        Page<BoardEntity> searchEntities = null;
+        boardRepository.findAll(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "bid")));
+
+        if (p.equals("boardTitle")){
+            searchEntities = boardRepository.findByBoardTitleContaining
+                    (q, PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "bid")));
+        }else{
+            searchEntities = boardRepository.findByBoardContentsContaining
+                    (q, PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "bid")));
+
+        }
+        Page<BoardDTO> searchList = searchEntities.map(
+
+                board -> new BoardDTO(board.getBid(),
+                        board.getBoardTitle(),
+                        board.getBoardWriter(),
+                        board.getBoardHits(),
+                        board.getCreatedTime()
+                ));
+        return searchList;
+    }
+
 }
 
