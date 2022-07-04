@@ -92,7 +92,7 @@ public class BoardController {
         model.addAttribute("endPage", endPage);
         model.addAttribute("q",q);
         model.addAttribute("p",p);
-        model.addAttribute("searchList",boardList);
-        return "boardPages/list";
+        model.addAttribute("boardList",boardList);
+        return "boardPages/search";
     }
 }
